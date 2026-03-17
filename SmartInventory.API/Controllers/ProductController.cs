@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartInventory.Models.Models;
 
@@ -6,6 +7,7 @@ using SmartInventory.Models.Models;
 
 namespace SmartInventory.API.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class ProductController : ControllerBase

@@ -15,6 +15,8 @@ public partial class demo01Context : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>(entity =>
@@ -28,6 +30,16 @@ public partial class demo01Context : DbContext
             entity.Property(e => e.Stock)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC0725A782A5");
+
+            entity.ToTable("User");
+
+            entity.Property(e => e.Role).HasMaxLength(50);
+            entity.Property(e => e.Username).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);

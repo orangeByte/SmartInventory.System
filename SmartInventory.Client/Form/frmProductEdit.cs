@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SmartInventory.Client.Tools;
 
 namespace SmartInventory.Client.Form
 {
@@ -38,19 +39,14 @@ namespace SmartInventory.Client.Form
 				simpleButton2.Enabled = false;
 				dataLayoutControl1.Validate();
 
-				using var client = new HttpClient();
-				client.BaseAddress = new Uri("http://localhost:5016/");
-				var json = JsonConvert.SerializeObject(_product);
-				var content = new StringContent(json, Encoding.UTF8, "application/json");
-
 				HttpResponseMessage rep = null;
 				if (_product.Id == 0)
 				{
-					rep = await client.PostAsync($"api/Product/", content);
+					rep = await HttpHelper.PostAsync($"api/Product/", _product);
 				}
 				else
 				{
-					rep = await client.PutAsync($"api/Product/{_product.Id}", content);
+					rep = await HttpHelper.PutAsync($"api/Product/{_product.Id}", _product);
 				}
 
 				if (rep.IsSuccessStatusCode)

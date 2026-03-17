@@ -15,6 +15,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SmartInventory.Client.Tools;
 
 namespace SmartInventory.Client
 {
@@ -35,8 +36,8 @@ namespace SmartInventory.Client
 			IOverlaySplashScreenHandle handle = SplashScreenManager.ShowOverlayForm(gridControl1);
 			try
 			{
-				using var http = new HttpClient();
-				var data = await http.GetFromJsonAsync<List<Product>>("http://localhost:5016/api/Product");
+
+				var data = await HttpHelper.GetAsync<List<Product>>("/api/Product");
 
 				gridControl1.DataSource = data;
 				gridView1.OptionsBehavior.Editable = false;
@@ -121,8 +122,7 @@ namespace SmartInventory.Client
 				{
 					var handle = SplashScreenManager.ShowOverlayForm(gridControl1);
 
-					using var client = new HttpClient();
-					var rep = await client.DeleteAsync($"http://localhost:5016/api/Product/{product.Id}");
+					var rep = await HttpHelper.DeleteAsync($"/api/Product/{product.Id}");
 
 					if (rep.IsSuccessStatusCode)
 					{

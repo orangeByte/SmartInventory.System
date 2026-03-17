@@ -21,6 +21,10 @@
       {
          "Name": "[dbo].[Product]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User]",
+         "ObjectType": 0
       }
    ],
    "UiHint": null,
