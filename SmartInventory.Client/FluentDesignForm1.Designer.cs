@@ -48,11 +48,12 @@
 			barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
 			barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
 			barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
+			barStaticItem4 = new DevExpress.XtraBars.BarStaticItem();
 			barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			barStaticItem4 = new DevExpress.XtraBars.BarStaticItem();
+			timer1 = new System.Windows.Forms.Timer(components);
 			((System.ComponentModel.ISupportInitialize)accordionControl1).BeginInit();
 			((System.ComponentModel.ISupportInitialize)fluentDesignFormControl1).BeginInit();
 			((System.ComponentModel.ISupportInitialize)fluentFormDefaultManager1).BeginInit();
@@ -66,7 +67,7 @@
 			fluentDesignFormContainer1.Dock = DockStyle.Fill;
 			fluentDesignFormContainer1.Location = new Point(269, 77);
 			fluentDesignFormContainer1.Name = "fluentDesignFormContainer1";
-			fluentDesignFormContainer1.Size = new Size(767, 506);
+			fluentDesignFormContainer1.Size = new Size(771, 508);
 			fluentDesignFormContainer1.TabIndex = 0;
 			// 
 			// accordionControl1
@@ -76,7 +77,7 @@
 			accordionControl1.Location = new Point(0, 77);
 			accordionControl1.Name = "accordionControl1";
 			accordionControl1.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
-			accordionControl1.Size = new Size(269, 506);
+			accordionControl1.Size = new Size(269, 508);
 			accordionControl1.TabIndex = 1;
 			accordionControl1.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
 			// 
@@ -115,9 +116,10 @@
 			fluentDesignFormControl1.Location = new Point(0, 0);
 			fluentDesignFormControl1.Manager = fluentFormDefaultManager1;
 			fluentDesignFormControl1.Name = "fluentDesignFormControl1";
-			fluentDesignFormControl1.Size = new Size(1036, 37);
+			fluentDesignFormControl1.Size = new Size(1040, 37);
 			fluentDesignFormControl1.TabIndex = 2;
 			fluentDesignFormControl1.TabStop = false;
+			fluentDesignFormControl1.Text = "主窗体";
 			// 
 			// barButtonItem1
 			// 
@@ -212,38 +214,6 @@
 			barStaticItem3.Name = "barStaticItem3";
 			barStaticItem3.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			// 
-			// barDockControlTop
-			// 
-			barDockControlTop.CausesValidation = false;
-			barDockControlTop.Dock = DockStyle.Top;
-			barDockControlTop.Location = new Point(0, 37);
-			barDockControlTop.Manager = barManager1;
-			barDockControlTop.Size = new Size(1036, 40);
-			// 
-			// barDockControlBottom
-			// 
-			barDockControlBottom.CausesValidation = false;
-			barDockControlBottom.Dock = DockStyle.Bottom;
-			barDockControlBottom.Location = new Point(0, 583);
-			barDockControlBottom.Manager = barManager1;
-			barDockControlBottom.Size = new Size(1036, 32);
-			// 
-			// barDockControlLeft
-			// 
-			barDockControlLeft.CausesValidation = false;
-			barDockControlLeft.Dock = DockStyle.Left;
-			barDockControlLeft.Location = new Point(0, 77);
-			barDockControlLeft.Manager = barManager1;
-			barDockControlLeft.Size = new Size(0, 506);
-			// 
-			// barDockControlRight
-			// 
-			barDockControlRight.CausesValidation = false;
-			barDockControlRight.Dock = DockStyle.Right;
-			barDockControlRight.Location = new Point(1036, 77);
-			barDockControlRight.Manager = barManager1;
-			barDockControlRight.Size = new Size(0, 506);
-			// 
 			// barStaticItem4
 			// 
 			barStaticItem4.Caption = "barStaticItem4";
@@ -253,11 +223,49 @@
 			barStaticItem4.Name = "barStaticItem4";
 			barStaticItem4.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			// 
+			// barDockControlTop
+			// 
+			barDockControlTop.CausesValidation = false;
+			barDockControlTop.Dock = DockStyle.Top;
+			barDockControlTop.Location = new Point(0, 37);
+			barDockControlTop.Manager = barManager1;
+			barDockControlTop.Size = new Size(1040, 40);
+			// 
+			// barDockControlBottom
+			// 
+			barDockControlBottom.CausesValidation = false;
+			barDockControlBottom.Dock = DockStyle.Bottom;
+			barDockControlBottom.Location = new Point(0, 585);
+			barDockControlBottom.Manager = barManager1;
+			barDockControlBottom.Size = new Size(1040, 32);
+			// 
+			// barDockControlLeft
+			// 
+			barDockControlLeft.CausesValidation = false;
+			barDockControlLeft.Dock = DockStyle.Left;
+			barDockControlLeft.Location = new Point(0, 77);
+			barDockControlLeft.Manager = barManager1;
+			barDockControlLeft.Size = new Size(0, 508);
+			// 
+			// barDockControlRight
+			// 
+			barDockControlRight.CausesValidation = false;
+			barDockControlRight.Dock = DockStyle.Right;
+			barDockControlRight.Location = new Point(1040, 77);
+			barDockControlRight.Manager = barManager1;
+			barDockControlRight.Size = new Size(0, 508);
+			// 
+			// timer1
+			// 
+			timer1.Enabled = true;
+			timer1.Interval = 1000;
+			timer1.Tick += timer1_Tick;
+			// 
 			// FluentDesignForm1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 16F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1036, 615);
+			ClientSize = new Size(1040, 617);
 			ControlContainer = fluentDesignFormContainer1;
 			Controls.Add(fluentDesignFormContainer1);
 			Controls.Add(accordionControl1);
@@ -305,5 +313,6 @@
 		private DevExpress.XtraBars.BarStaticItem barStaticItem2;
 		private DevExpress.XtraBars.BarStaticItem barStaticItem3;
 		private DevExpress.XtraBars.BarStaticItem barStaticItem4;
+		private System.Windows.Forms.Timer timer1;
 	}
 }

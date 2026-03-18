@@ -105,7 +105,7 @@
 			Controls.Add(textEdit1);
 			DoubleBuffered = true;
 			Name = "frmLogin";
-			Text = "frmLogin";
+			Text = "登陆";
 			((System.ComponentModel.ISupportInitialize)textEdit1.Properties).EndInit();
 			((System.ComponentModel.ISupportInitialize)textEdit2.Properties).EndInit();
 			ResumeLayout(false);

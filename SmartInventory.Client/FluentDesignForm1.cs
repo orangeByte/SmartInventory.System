@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraBars;
+using DevExpress.XtraEditors.Filtering.Templates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,11 +19,8 @@ namespace SmartInventory.Client
 		{
 			InitializeComponent();
 
-			var handler = new JwtSecurityTokenHandler();
-			var jwttoekn = handler.ReadJwtToken(HttpHelper.AccessToken);
-
-			var username = jwttoekn.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
-			var role = jwttoekn.Claims.FirstOrDefault(x => x.Type.Contains("role"))?.Value;
+			var username = GetCurUsername();
+			var role = GetCurRole();
 
 			barStaticItem1.Caption = "状态: 系统正常";
 			barStaticItem2.Caption = $"用户: {username}";
@@ -42,6 +40,11 @@ namespace SmartInventory.Client
 		{
 			tabbedView1.OpenModule<sysControl>("系统设置");
 
+		}
+
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+			barStaticItem4.Caption = $"时间: {DateTime.Now:yyyy-MM-dd HH:mm:ss}";
 		}
 	}
 }

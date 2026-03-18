@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SmartInventory.Models.Dto;
 using SmartInventory.Models.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,9 +18,25 @@ namespace SmartInventory.API.Controllers
 
 		// GET: api/<ProductController>
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Product>>> Get()
+		public async Task<ActionResult<PagedResult<Product>>> Get(int page = 1, int size = 20)
 		{
-			return await _demo01Context.Products.ToListAsync();
+			var total = await _demo01Context.Products.CountAsync();
+
+			var data = await _demo01Context
+				.Products
+				.OrderBy(x => x.Id)
+				.Skip((page - 1) * size)
+				.Take(size)
+				.ToListAsync();
+
+			return new PagedResult<Product>
+			{
+				TotalCount = total,
+				PageIndex = page,
+				PageSize = size,
+				Items = data
+			};
+
 		}
 
 		// GET api/<ProductController>/5

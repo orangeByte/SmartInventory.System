@@ -3,6 +3,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraSplashScreen;
 using SmartInventory.Client.Form;
+using SmartInventory.Models.Dto;
 using SmartInventory.Models.Models;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,10 @@ namespace SmartInventory.Client
 {
 	public partial class ucStockList : DevExpress.XtraEditors.XtraUserControl
 	{
+
+		private int _pageindex = 1;
+		private int _pagesize = 29;
+
 		public ucStockList()
 		{
 			InitializeComponent();
@@ -28,6 +33,8 @@ namespace SmartInventory.Client
 
 		private async void gridControl1_Load(object sender, EventArgs e)
 		{
+			// 粗糙的权限控制
+			simpleButton3.Enabled = (GetCurRole() == "admin");
 			await RefreshData();
 		}
 
@@ -37,9 +44,13 @@ namespace SmartInventory.Client
 			try
 			{
 
-				var data = await HttpHelper.GetAsync<List<Product>>("/api/Product");
+				var data = await HttpHelper.GetAsync<PagedResult<Product>>($"/api/Product?page={_pageindex}&size={_pagesize}");
+				label1.Text = $"第{_pageindex}页 / 共 {data.TotalPages}";
 
-				gridControl1.DataSource = data;
+				simpleButton4.Enabled = data.HasPre;
+				simpleButton5.Enabled = data.HasNext;
+
+				gridControl1.DataSource = data.Items;
 				gridView1.OptionsBehavior.Editable = false;
 				gridView1.OptionsFind.AlwaysVisible = true;
 			}
@@ -141,6 +152,18 @@ namespace SmartInventory.Client
 					XtraMessageBox.Show($"删除失败, {ex}");
 				}
 			}
+		}
+
+		private async void simpleButton4_Click(object sender, EventArgs e)
+		{
+			_pageindex--;
+			await RefreshData();
+		}
+
+		private async void simpleButton5_Click(object sender, EventArgs e)
+		{
+			_pageindex++;
+			await RefreshData();
 		}
 	}
 }

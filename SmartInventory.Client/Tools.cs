@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -77,7 +78,28 @@ namespace SmartInventory.Client
 				return await _httpClient.DeleteAsync(url);
 			}
 		}
-	
+
+		public static string GetCurUsername()
+		{
+			var handler = new JwtSecurityTokenHandler();
+			var jwttoekn = handler.ReadJwtToken(HttpHelper.AccessToken);
+
+			var username = jwttoekn.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+
+			return username;
+		}
+
+		public static string GetCurRole()
+		{
+			var handler = new JwtSecurityTokenHandler();
+			var jwttoekn = handler.ReadJwtToken(HttpHelper.AccessToken);
+
+			var role = jwttoekn.Claims.FirstOrDefault(x => x.Type.Contains("role"))?.Value;
+
+			return role;
+
+		}
+
 	}
 
 	

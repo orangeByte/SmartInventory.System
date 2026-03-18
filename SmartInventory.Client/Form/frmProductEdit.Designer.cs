@@ -31,6 +31,8 @@
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProductEdit));
 			dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+			simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+			simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
 			IdTextEdit = new DevExpress.XtraEditors.TextEdit();
 			productBindingSource = new BindingSource(components);
 			NameTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -42,11 +44,9 @@
 			ItemForName = new DevExpress.XtraLayout.LayoutControlItem();
 			ItemForPrice = new DevExpress.XtraLayout.LayoutControlItem();
 			ItemForStock = new DevExpress.XtraLayout.LayoutControlItem();
-			productBindingSource1 = new BindingSource(components);
-			simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
 			layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-			simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
 			layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+			productBindingSource1 = new BindingSource(components);
 			((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
 			dataLayoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)IdTextEdit.Properties).BeginInit();
@@ -60,9 +60,9 @@
 			((System.ComponentModel.ISupportInitialize)ItemForName).BeginInit();
 			((System.ComponentModel.ISupportInitialize)ItemForPrice).BeginInit();
 			((System.ComponentModel.ISupportInitialize)ItemForStock).BeginInit();
-			((System.ComponentModel.ISupportInitialize)productBindingSource1).BeginInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+			((System.ComponentModel.ISupportInitialize)productBindingSource1).BeginInit();
 			SuspendLayout();
 			// 
 			// dataLayoutControl1
@@ -84,6 +84,28 @@
 			dataLayoutControl1.Size = new Size(863, 508);
 			dataLayoutControl1.TabIndex = 0;
 			dataLayoutControl1.Text = "dataLayoutControl1";
+			// 
+			// simpleButton2
+			// 
+			simpleButton2.ImageOptions.Image = (Image)resources.GetObject("simpleButton2.ImageOptions.Image");
+			simpleButton2.Location = new Point(14, 118);
+			simpleButton2.Name = "simpleButton2";
+			simpleButton2.Size = new Size(415, 36);
+			simpleButton2.StyleController = dataLayoutControl1;
+			simpleButton2.TabIndex = 9;
+			simpleButton2.Text = "保存";
+			simpleButton2.Click += simpleButton2_Click;
+			// 
+			// simpleButton1
+			// 
+			simpleButton1.ImageOptions.Image = (Image)resources.GetObject("simpleButton1.ImageOptions.Image");
+			simpleButton1.Location = new Point(433, 118);
+			simpleButton1.Name = "simpleButton1";
+			simpleButton1.Size = new Size(416, 36);
+			simpleButton1.StyleController = dataLayoutControl1;
+			simpleButton1.TabIndex = 8;
+			simpleButton1.Text = "取消";
+			simpleButton1.Click += simpleButton1_Click;
 			// 
 			// IdTextEdit
 			// 
@@ -188,21 +210,6 @@
 			ItemForStock.Text = "库存";
 			ItemForStock.TextSize = new Size(60, 16);
 			// 
-			// productBindingSource1
-			// 
-			productBindingSource1.DataSource = typeof(Models.Models.Product);
-			// 
-			// simpleButton1
-			// 
-			simpleButton1.ImageOptions.Image = (Image)resources.GetObject("simpleButton1.ImageOptions.Image");
-			simpleButton1.Location = new Point(433, 118);
-			simpleButton1.Name = "simpleButton1";
-			simpleButton1.Size = new Size(416, 36);
-			simpleButton1.StyleController = dataLayoutControl1;
-			simpleButton1.TabIndex = 8;
-			simpleButton1.Text = "取消";
-			simpleButton1.Click += simpleButton1_Click;
-			// 
 			// layoutControlItem1
 			// 
 			layoutControlItem1.Control = simpleButton1;
@@ -210,17 +217,6 @@
 			layoutControlItem1.Name = "layoutControlItem1";
 			layoutControlItem1.Size = new Size(420, 380);
 			layoutControlItem1.TextVisible = false;
-			// 
-			// simpleButton2
-			// 
-			simpleButton2.ImageOptions.Image = (Image)resources.GetObject("simpleButton2.ImageOptions.Image");
-			simpleButton2.Location = new Point(14, 118);
-			simpleButton2.Name = "simpleButton2";
-			simpleButton2.Size = new Size(415, 36);
-			simpleButton2.StyleController = dataLayoutControl1;
-			simpleButton2.TabIndex = 9;
-			simpleButton2.Text = "保存";
-			simpleButton2.Click += simpleButton2_Click;
 			// 
 			// layoutControlItem2
 			// 
@@ -230,6 +226,10 @@
 			layoutControlItem2.Size = new Size(419, 380);
 			layoutControlItem2.TextVisible = false;
 			// 
+			// productBindingSource1
+			// 
+			productBindingSource1.DataSource = typeof(Models.Models.Product);
+			// 
 			// frmProductEdit
 			// 
 			AutoScaleDimensions = new SizeF(7F, 16F);
@@ -237,7 +237,7 @@
 			ClientSize = new Size(863, 508);
 			Controls.Add(dataLayoutControl1);
 			Name = "frmProductEdit";
-			Text = "frmProductEdit";
+			Text = "库存管理";
 			((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
 			dataLayoutControl1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)IdTextEdit.Properties).EndInit();
@@ -251,9 +251,9 @@
 			((System.ComponentModel.ISupportInitialize)ItemForName).EndInit();
 			((System.ComponentModel.ISupportInitialize)ItemForPrice).EndInit();
 			((System.ComponentModel.ISupportInitialize)ItemForStock).EndInit();
-			((System.ComponentModel.ISupportInitialize)productBindingSource1).EndInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+			((System.ComponentModel.ISupportInitialize)productBindingSource1).EndInit();
 			ResumeLayout(false);
 		}
 
