@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExpress.Win.Dashboard.Design" Version="25.2.5" />
     <PackageReference Include="DevExpress.Win.Design" Version="25.2.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />

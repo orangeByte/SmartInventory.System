@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraBars;
 using DevExpress.XtraEditors.Filtering.Templates;
+using SmartInventory.Client.Form;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,6 +46,12 @@ namespace SmartInventory.Client
 		private void timer1_Tick(object sender, EventArgs e)
 		{
 			barStaticItem4.Caption = $"时间: {DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+		}
+
+		private void accordionControlElement6_Click(object sender, EventArgs e)
+		{
+			tabbedView1.OpenModule<ucDashboard>("库存看板");
+
 		}
 	}
 }

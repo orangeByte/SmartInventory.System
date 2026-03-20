@@ -34,6 +34,8 @@
 			accordionControl1 = new DevExpress.XtraBars.Navigation.AccordionControl();
 			accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
 			accordionControlElement4 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+			accordionControlElement5 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+			accordionControlElement6 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
 			accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
 			accordionControlElement3 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
 			fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
@@ -67,43 +69,60 @@
 			fluentDesignFormContainer1.Dock = DockStyle.Fill;
 			fluentDesignFormContainer1.Location = new Point(269, 77);
 			fluentDesignFormContainer1.Name = "fluentDesignFormContainer1";
-			fluentDesignFormContainer1.Size = new Size(771, 508);
+			fluentDesignFormContainer1.Size = new Size(775, 510);
 			fluentDesignFormContainer1.TabIndex = 0;
 			// 
 			// accordionControl1
 			// 
 			accordionControl1.Dock = DockStyle.Left;
-			accordionControl1.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { accordionControlElement1, accordionControlElement2 });
+			accordionControl1.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { accordionControlElement1, accordionControlElement5, accordionControlElement2 });
 			accordionControl1.Location = new Point(0, 77);
 			accordionControl1.Name = "accordionControl1";
 			accordionControl1.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
-			accordionControl1.Size = new Size(269, 508);
+			accordionControl1.Size = new Size(269, 510);
 			accordionControl1.TabIndex = 1;
 			accordionControl1.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
 			// 
 			// accordionControlElement1
 			// 
 			accordionControlElement1.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { accordionControlElement4 });
-			accordionControlElement1.Expanded = true;
+			accordionControlElement1.ImageOptions.Image = (Image)resources.GetObject("accordionControlElement1.ImageOptions.Image");
 			accordionControlElement1.Name = "accordionControlElement1";
 			accordionControlElement1.Text = "库存";
 			// 
 			// accordionControlElement4
 			// 
+			accordionControlElement4.ImageOptions.Image = (Image)resources.GetObject("accordionControlElement4.ImageOptions.Image");
 			accordionControlElement4.Name = "accordionControlElement4";
 			accordionControlElement4.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
 			accordionControlElement4.Text = "库存查看";
 			accordionControlElement4.Click += accordionControlElement4_Click;
 			// 
+			// accordionControlElement5
+			// 
+			accordionControlElement5.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { accordionControlElement6 });
+			accordionControlElement5.ImageOptions.Image = (Image)resources.GetObject("accordionControlElement5.ImageOptions.Image");
+			accordionControlElement5.Name = "accordionControlElement5";
+			accordionControlElement5.Text = "看板";
+			// 
+			// accordionControlElement6
+			// 
+			accordionControlElement6.ImageOptions.Image = (Image)resources.GetObject("accordionControlElement6.ImageOptions.Image");
+			accordionControlElement6.Name = "accordionControlElement6";
+			accordionControlElement6.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+			accordionControlElement6.Text = "库存监控中心";
+			accordionControlElement6.Click += accordionControlElement6_Click;
+			// 
 			// accordionControlElement2
 			// 
 			accordionControlElement2.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { accordionControlElement3 });
-			accordionControlElement2.Expanded = true;
+			accordionControlElement2.ImageOptions.Image = (Image)resources.GetObject("accordionControlElement2.ImageOptions.Image");
 			accordionControlElement2.Name = "accordionControlElement2";
 			accordionControlElement2.Text = "系统";
 			// 
 			// accordionControlElement3
 			// 
+			accordionControlElement3.ImageOptions.Image = (Image)resources.GetObject("accordionControlElement3.ImageOptions.Image");
 			accordionControlElement3.Name = "accordionControlElement3";
 			accordionControlElement3.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
 			accordionControlElement3.Text = "系统设置";
@@ -116,7 +135,7 @@
 			fluentDesignFormControl1.Location = new Point(0, 0);
 			fluentDesignFormControl1.Manager = fluentFormDefaultManager1;
 			fluentDesignFormControl1.Name = "fluentDesignFormControl1";
-			fluentDesignFormControl1.Size = new Size(1040, 37);
+			fluentDesignFormControl1.Size = new Size(1044, 37);
 			fluentDesignFormControl1.TabIndex = 2;
 			fluentDesignFormControl1.TabStop = false;
 			fluentDesignFormControl1.Text = "主窗体";
@@ -229,15 +248,15 @@
 			barDockControlTop.Dock = DockStyle.Top;
 			barDockControlTop.Location = new Point(0, 37);
 			barDockControlTop.Manager = barManager1;
-			barDockControlTop.Size = new Size(1040, 40);
+			barDockControlTop.Size = new Size(1044, 40);
 			// 
 			// barDockControlBottom
 			// 
 			barDockControlBottom.CausesValidation = false;
 			barDockControlBottom.Dock = DockStyle.Bottom;
-			barDockControlBottom.Location = new Point(0, 585);
+			barDockControlBottom.Location = new Point(0, 587);
 			barDockControlBottom.Manager = barManager1;
-			barDockControlBottom.Size = new Size(1040, 32);
+			barDockControlBottom.Size = new Size(1044, 32);
 			// 
 			// barDockControlLeft
 			// 
@@ -245,15 +264,15 @@
 			barDockControlLeft.Dock = DockStyle.Left;
 			barDockControlLeft.Location = new Point(0, 77);
 			barDockControlLeft.Manager = barManager1;
-			barDockControlLeft.Size = new Size(0, 508);
+			barDockControlLeft.Size = new Size(0, 510);
 			// 
 			// barDockControlRight
 			// 
 			barDockControlRight.CausesValidation = false;
 			barDockControlRight.Dock = DockStyle.Right;
-			barDockControlRight.Location = new Point(1040, 77);
+			barDockControlRight.Location = new Point(1044, 77);
 			barDockControlRight.Manager = barManager1;
-			barDockControlRight.Size = new Size(0, 508);
+			barDockControlRight.Size = new Size(0, 510);
 			// 
 			// timer1
 			// 
@@ -265,7 +284,7 @@
 			// 
 			AutoScaleDimensions = new SizeF(7F, 16F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1040, 617);
+			ClientSize = new Size(1044, 619);
 			ControlContainer = fluentDesignFormContainer1;
 			Controls.Add(fluentDesignFormContainer1);
 			Controls.Add(accordionControl1);
@@ -314,5 +333,7 @@
 		private DevExpress.XtraBars.BarStaticItem barStaticItem3;
 		private DevExpress.XtraBars.BarStaticItem barStaticItem4;
 		private System.Windows.Forms.Timer timer1;
+		private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement5;
+		private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement6;
 	}
 }
