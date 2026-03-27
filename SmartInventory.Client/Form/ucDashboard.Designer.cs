@@ -34,6 +34,7 @@
 			DevExpress.XtraCharts.Series series2 = new DevExpress.XtraCharts.Series();
 			DevExpress.XtraCharts.PieSeriesView pieSeriesView1 = new DevExpress.XtraCharts.PieSeriesView();
 			DevExpress.XtraCharts.ChartTitle chartTitle2 = new DevExpress.XtraCharts.ChartTitle();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucDashboard));
 			layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
 			chartControl2 = new DevExpress.XtraCharts.ChartControl();
 			chartControl1 = new DevExpress.XtraCharts.ChartControl();
@@ -45,13 +46,19 @@
 			labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			panelControl1 = new DevExpress.XtraEditors.PanelControl();
 			labelControl1 = new DevExpress.XtraEditors.LabelControl();
+			simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+			simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
 			Root = new DevExpress.XtraLayout.LayoutControlGroup();
 			layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-			layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+			emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+			layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+			emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
+			layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+			layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
 			layoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)chartControl2).BeginInit();
@@ -72,9 +79,13 @@
 			((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
-			((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
+			((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
+			((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+			((System.ComponentModel.ISupportInitialize)emptySpaceItem4).BeginInit();
+			((System.ComponentModel.ISupportInitialize)layoutControlItem7).BeginInit();
+			((System.ComponentModel.ISupportInitialize)layoutControlItem8).BeginInit();
 			SuspendLayout();
 			// 
 			// layoutControl1
@@ -85,6 +96,8 @@
 			layoutControl1.Controls.Add(panelControl3);
 			layoutControl1.Controls.Add(panelControl2);
 			layoutControl1.Controls.Add(panelControl1);
+			layoutControl1.Controls.Add(simpleButton1);
+			layoutControl1.Controls.Add(simpleButton2);
 			layoutControl1.Dock = DockStyle.Fill;
 			layoutControl1.Location = new Point(0, 0);
 			layoutControl1.Name = "layoutControl1";
@@ -101,7 +114,7 @@
 			chartControl2.Diagram = xyDiagram1;
 			chartControl2.Legend.TextVisible = false;
 			chartControl2.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
-			chartControl2.Location = new Point(477, 54);
+			chartControl2.Location = new Point(477, 97);
 			chartControl2.Name = "chartControl2";
 			series1.Name = "Series 1";
 			series1.SeriesID = 1;
@@ -109,8 +122,8 @@
 	{
 	series1
 	};
-			chartControl2.Size = new Size(475, 508);
-			chartControl2.TabIndex = 6;
+			chartControl2.Size = new Size(475, 465);
+			chartControl2.TabIndex = 2;
 			chartTitle1.DXFont = new DevExpress.Drawing.DXFont("Microsoft YaHei UI", 18F, DevExpress.Drawing.DXFontStyle.Bold);
 			chartTitle1.Text = "资产价值 Top 10 (百万元)";
 			chartTitle1.TitleID = 0;
@@ -118,7 +131,7 @@
 			// 
 			// chartControl1
 			// 
-			chartControl1.Location = new Point(14, 54);
+			chartControl1.Location = new Point(14, 97);
 			chartControl1.Name = "chartControl1";
 			series2.Name = "Series 1";
 			series2.SeriesID = 1;
@@ -127,8 +140,8 @@
 	{
 	series2
 	};
-			chartControl1.Size = new Size(459, 508);
-			chartControl1.TabIndex = 5;
+			chartControl1.Size = new Size(459, 465);
+			chartControl1.TabIndex = 0;
 			chartTitle2.DXFont = new DevExpress.Drawing.DXFont("Microsoft YaHei UI", 18F, DevExpress.Drawing.DXFontStyle.Bold);
 			chartTitle2.Text = "库存健康分布";
 			chartTitle2.TitleID = 0;
@@ -138,10 +151,10 @@
 			// panelControl4
 			// 
 			panelControl4.Controls.Add(labelControl4);
-			panelControl4.Location = new Point(736, 14);
+			panelControl4.Location = new Point(716, 54);
 			panelControl4.Name = "panelControl4";
-			panelControl4.Size = new Size(216, 36);
-			panelControl4.TabIndex = 4;
+			panelControl4.Size = new Size(236, 39);
+			panelControl4.TabIndex = 1;
 			// 
 			// labelControl4
 			// 
@@ -158,10 +171,10 @@
 			// panelControl3
 			// 
 			panelControl3.Controls.Add(labelControl3);
-			panelControl3.Location = new Point(477, 14);
+			panelControl3.Location = new Point(477, 54);
 			panelControl3.Name = "panelControl3";
-			panelControl3.Size = new Size(255, 36);
-			panelControl3.TabIndex = 3;
+			panelControl3.Size = new Size(235, 39);
+			panelControl3.TabIndex = 1;
 			// 
 			// labelControl3
 			// 
@@ -178,10 +191,10 @@
 			// panelControl2
 			// 
 			panelControl2.Controls.Add(labelControl2);
-			panelControl2.Location = new Point(228, 14);
+			panelControl2.Location = new Point(228, 54);
 			panelControl2.Name = "panelControl2";
-			panelControl2.Size = new Size(245, 36);
-			panelControl2.TabIndex = 2;
+			panelControl2.Size = new Size(245, 39);
+			panelControl2.TabIndex = 1;
 			// 
 			// labelControl2
 			// 
@@ -198,9 +211,9 @@
 			// panelControl1
 			// 
 			panelControl1.Controls.Add(labelControl1);
-			panelControl1.Location = new Point(14, 14);
+			panelControl1.Location = new Point(14, 54);
 			panelControl1.Name = "panelControl1";
-			panelControl1.Size = new Size(210, 36);
+			panelControl1.Size = new Size(210, 39);
 			panelControl1.TabIndex = 1;
 			// 
 			// labelControl1
@@ -216,11 +229,33 @@
 			labelControl1.TabIndex = 0;
 			labelControl1.Text = "labelControl1";
 			// 
+			// simpleButton1
+			// 
+			simpleButton1.ImageOptions.Image = (Image)resources.GetObject("simpleButton1.ImageOptions.Image");
+			simpleButton1.Location = new Point(14, 14);
+			simpleButton1.Name = "simpleButton1";
+			simpleButton1.Size = new Size(103, 36);
+			simpleButton1.StyleController = layoutControl1;
+			simpleButton1.TabIndex = 4;
+			simpleButton1.Text = "刷新";
+			simpleButton1.Click += simpleButton1_Click;
+			// 
+			// simpleButton2
+			// 
+			simpleButton2.ImageOptions.Image = (Image)resources.GetObject("simpleButton2.ImageOptions.Image");
+			simpleButton2.Location = new Point(121, 14);
+			simpleButton2.Name = "simpleButton2";
+			simpleButton2.Size = new Size(103, 36);
+			simpleButton2.StyleController = layoutControl1;
+			simpleButton2.TabIndex = 5;
+			simpleButton2.Text = "导出";
+			simpleButton2.Click += simpleButton2_Click;
+			// 
 			// Root
 			// 
 			Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
 			Root.GroupBordersVisible = false;
-			Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, layoutControlItem2, layoutControlItem3, layoutControlItem4, layoutControlItem5, layoutControlItem6 });
+			Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, layoutControlItem2, layoutControlItem3, layoutControlItem5, layoutControlItem6, emptySpaceItem2, layoutControlItem4, emptySpaceItem4, layoutControlItem7, layoutControlItem8 });
 			Root.Name = "Root";
 			Root.Size = new Size(966, 576);
 			Root.TextVisible = false;
@@ -228,50 +263,78 @@
 			// layoutControlItem1
 			// 
 			layoutControlItem1.Control = panelControl1;
-			layoutControlItem1.Location = new Point(0, 0);
+			layoutControlItem1.Location = new Point(0, 40);
 			layoutControlItem1.Name = "layoutControlItem1";
-			layoutControlItem1.Size = new Size(214, 40);
+			layoutControlItem1.Size = new Size(214, 43);
 			layoutControlItem1.TextVisible = false;
 			// 
 			// layoutControlItem2
 			// 
 			layoutControlItem2.Control = panelControl2;
-			layoutControlItem2.Location = new Point(214, 0);
+			layoutControlItem2.Location = new Point(214, 40);
 			layoutControlItem2.Name = "layoutControlItem2";
-			layoutControlItem2.Size = new Size(249, 40);
+			layoutControlItem2.Size = new Size(249, 43);
 			layoutControlItem2.TextVisible = false;
 			// 
 			// layoutControlItem3
 			// 
 			layoutControlItem3.Control = panelControl3;
-			layoutControlItem3.Location = new Point(463, 0);
+			layoutControlItem3.Location = new Point(463, 40);
 			layoutControlItem3.Name = "layoutControlItem3";
-			layoutControlItem3.Size = new Size(259, 40);
+			layoutControlItem3.Size = new Size(239, 43);
 			layoutControlItem3.TextVisible = false;
-			// 
-			// layoutControlItem4
-			// 
-			layoutControlItem4.Control = panelControl4;
-			layoutControlItem4.Location = new Point(722, 0);
-			layoutControlItem4.Name = "layoutControlItem4";
-			layoutControlItem4.Size = new Size(220, 40);
-			layoutControlItem4.TextVisible = false;
 			// 
 			// layoutControlItem5
 			// 
 			layoutControlItem5.Control = chartControl1;
-			layoutControlItem5.Location = new Point(0, 40);
+			layoutControlItem5.Location = new Point(0, 83);
 			layoutControlItem5.Name = "layoutControlItem5";
-			layoutControlItem5.Size = new Size(463, 512);
+			layoutControlItem5.Size = new Size(463, 469);
 			layoutControlItem5.TextVisible = false;
 			// 
 			// layoutControlItem6
 			// 
 			layoutControlItem6.Control = chartControl2;
-			layoutControlItem6.Location = new Point(463, 40);
+			layoutControlItem6.Location = new Point(463, 83);
 			layoutControlItem6.Name = "layoutControlItem6";
-			layoutControlItem6.Size = new Size(479, 512);
+			layoutControlItem6.Size = new Size(479, 469);
 			layoutControlItem6.TextVisible = false;
+			// 
+			// emptySpaceItem2
+			// 
+			emptySpaceItem2.Location = new Point(463, 0);
+			emptySpaceItem2.Name = "emptySpaceItem2";
+			emptySpaceItem2.Size = new Size(479, 40);
+			// 
+			// layoutControlItem4
+			// 
+			layoutControlItem4.Control = panelControl4;
+			layoutControlItem4.Location = new Point(702, 40);
+			layoutControlItem4.Name = "layoutControlItem4";
+			layoutControlItem4.Size = new Size(240, 43);
+			layoutControlItem4.TextVisible = false;
+			// 
+			// emptySpaceItem4
+			// 
+			emptySpaceItem4.Location = new Point(214, 0);
+			emptySpaceItem4.Name = "emptySpaceItem4";
+			emptySpaceItem4.Size = new Size(249, 40);
+			// 
+			// layoutControlItem7
+			// 
+			layoutControlItem7.Control = simpleButton1;
+			layoutControlItem7.Location = new Point(0, 0);
+			layoutControlItem7.Name = "layoutControlItem7";
+			layoutControlItem7.Size = new Size(107, 40);
+			layoutControlItem7.TextVisible = false;
+			// 
+			// layoutControlItem8
+			// 
+			layoutControlItem8.Control = simpleButton2;
+			layoutControlItem8.Location = new Point(107, 0);
+			layoutControlItem8.Name = "layoutControlItem8";
+			layoutControlItem8.Size = new Size(107, 40);
+			layoutControlItem8.TextVisible = false;
 			// 
 			// ucDashboard
 			// 
@@ -305,9 +368,13 @@
 			((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
-			((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
 			((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
+			((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
+			((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+			((System.ComponentModel.ISupportInitialize)emptySpaceItem4).EndInit();
+			((System.ComponentModel.ISupportInitialize)layoutControlItem7).EndInit();
+			((System.ComponentModel.ISupportInitialize)layoutControlItem8).EndInit();
 			ResumeLayout(false);
 		}
 
@@ -322,7 +389,6 @@
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
 		private DevExpress.XtraCharts.ChartControl chartControl2;
 		private DevExpress.XtraCharts.ChartControl chartControl1;
 		private DevExpress.XtraEditors.LabelControl labelControl4;
@@ -331,5 +397,12 @@
 		private DevExpress.XtraEditors.LabelControl labelControl1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+		private DevExpress.XtraEditors.SimpleButton simpleButton1;
+		private DevExpress.XtraEditors.SimpleButton simpleButton2;
+		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
 	}
 }

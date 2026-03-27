@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraPrinting;
 using SmartInventory.Models.Dto;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,51 @@ namespace SmartInventory.Client.Form
 			e.SeriesDrawOptions.Color = targetColor;
 
 			e.LegendDrawOptions.Color = targetColor;
+		}
+
+		private void simpleButton1_Click(object sender, EventArgs e)
+		{
+			Refresh();
+		}
+
+		private void simpleButton2_Click(object sender, EventArgs e)
+		{
+			this.Cursor = Cursors.WaitCursor;
+			try
+			{
+				PrintableComponentLink link = new(new PrintingSystem())
+				{
+					Component = layoutControl1,
+					Landscape = true,
+					PaperKind = DevExpress.Drawing.Printing.DXPaperKind.A4
+				};
+
+				string filepath = "库存监控看板回执.pdf";
+				link.VerticalContentSplitting = VerticalContentSplitting.Smart;
+				layoutControlItem8.OptionsPrint.AllowPrint = false;
+				layoutControlItem7.OptionsPrint.AllowPrint = false;
+				emptySpaceItem2.OptionsPrint.AllowPrint = false;
+				emptySpaceItem4.OptionsPrint.AllowPrint = false;
+
+				link.ExportToPdf(filepath);
+
+				var psi = new System.Diagnostics.ProcessStartInfo
+				{
+					FileName = filepath,
+					UseShellExecute = true,
+				};
+
+				System.Diagnostics.Process.Start(psi);
+			}
+			catch (Exception ex)
+			{
+				XtraMessageBox.Show($"导出错误{ex}");
+			}
+			finally
+			{
+				Cursor = Cursors.Default;
+			}
+
 		}
 	}
 }
