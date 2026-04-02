@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO.Ports;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -100,6 +101,55 @@ namespace SmartInventory.Client
 
 		}
 
+		public class SerialPortManager
+		{
+			private SerialPort _serialPort;
+
+			public event Action<byte[], string> OnDataParsed;
+
+			public void Open(string portName, int baudRate = 9600)
+			{
+				if (_serialPort != null && _serialPort.IsOpen)
+				{
+					_serialPort.Close();
+				}
+
+				_serialPort = new SerialPort(portName, baudRate);
+				_serialPort.DataBits = 8;
+				_serialPort.StopBits = StopBits.One;
+				_serialPort.Parity = Parity.None;
+
+				_serialPort.DataReceived += (sender, e) =>
+				{
+					int bytesToRead = _serialPort.BytesToRead;
+					byte[] buffer = new byte[bytesToRead];
+					_serialPort.Read(buffer, 0, bytesToRead);
+
+					string hex = BitConverter.ToString(buffer).Replace("-", " ");
+
+					OnDataParsed?.Invoke(buffer, hex);
+				};
+
+				_serialPort.Open();
+			}
+
+			public void Close()
+			{
+				if (_serialPort != null && _serialPort.IsOpen)
+				{
+					_serialPort.Close();
+				}
+			}
+
+			public void SendData(string data)
+			{
+				if(_serialPort !=null && _serialPort.IsOpen)
+				{
+					byte[] buffer = Encoding.ASCII.GetBytes(data);
+					_serialPort.Write(buffer, 0, buffer.Length);
+				}
+			}
+		}
 	}
 
 	

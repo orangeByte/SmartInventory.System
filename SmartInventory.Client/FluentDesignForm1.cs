@@ -53,5 +53,10 @@ namespace SmartInventory.Client
 			tabbedView1.OpenModule<ucDashboard>("库存看板");
 
 		}
+
+		private void accordionControlElement7_Click(object sender, EventArgs e)
+		{
+			tabbedView1.OpenModule<ucHardwareCenter>("扫码入库");
+		}
 	}
 }
