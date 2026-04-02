@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using static SmartInventory.Client.Tools;
+using SmartInventory.Models.Models;
 
 
 namespace SmartInventory.Client.Form
@@ -19,6 +20,7 @@ namespace SmartInventory.Client.Form
 	{
 		BindingList<ScanLog> scanLogs = new();
 		SerialPortManager serialDataManager = new();
+		ScanLog ScanLog = null;
 
 		public ucHardwareCenter()
 		{
@@ -44,21 +46,25 @@ namespace SmartInventory.Client.Form
 			simpleButton2.Enabled = false;
 			simpleLabelItem1.Text = "状态：已断开";
 
-			serialDataManager.OnDataParsed += (buffer, hex) =>
+			serialDataManager.OnDataParsed += async (buffer, hex) =>
 			{
+				string SN = Encoding.ASCII.GetString(buffer).Trim();
+				ScanLog = new ScanLog
+				{
+					Time = DateTime.Now,
+					SN = SN,
+					ProductName = $"模拟数据{System.Guid.NewGuid().ToString()}",
+					Status = "0"
+				};
+
+				bool flag = await SaveToSys(ScanLog);
 				this.Invoke(new Action(() =>
 				{
 					memoEdit1.AppendText($"[{DateTime.Now:T}] RX:{hex} \r\n");
 
-					string SN = Encoding.ASCII.GetString(buffer).Trim();
-					scanLogs.Insert(0, new ScanLog
-					{
-						Time = DateTime.Now,
-						SN = SN,
-						ProductName = $"模拟数据{System.Guid.NewGuid().ToString()}",
-						Status = "0"
-					});
-					serialDataManager.SendData("OK");
+					scanLogs.Insert(0, ScanLog);
+
+					serialDataManager.SendData(flag ? "OK" : "ERR");
 				}));
 			};
 		}
@@ -102,6 +108,34 @@ namespace SmartInventory.Client.Form
 			}
 
 
+		}
+
+		private async Task<bool> SaveToSys(ScanLog scanLog)
+		{
+			try
+			{
+				Product product = new()
+				{
+					Name = scanLog.SN,
+					Price = 0,
+					Stock = "1"
+				};
+				var rep = await HttpHelper.PostAsync("api/Product", product);
+
+				if (rep.IsSuccessStatusCode)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 	}
 }
