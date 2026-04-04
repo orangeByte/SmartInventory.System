@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using static SmartInventory.Client.Tools;
 using SmartInventory.Models.Models;
+using System.Net.Sockets;
 
 
 namespace SmartInventory.Client.Form
@@ -20,6 +21,7 @@ namespace SmartInventory.Client.Form
 	{
 		BindingList<ScanLog> scanLogs = new();
 		SerialPortManager serialDataManager = new();
+		SocketManager socketManager = new();
 		ScanLog ScanLog = null;
 
 		public ucHardwareCenter()
@@ -42,29 +44,39 @@ namespace SmartInventory.Client.Form
 			gridView1.OptionsView.ShowGroupPanel = false;
 			gridView1.OptionsBehavior.Editable = false;
 
-			simpleButton1.Enabled = true;
-			simpleButton2.Enabled = false;
-			simpleLabelItem1.Text = "状态：已断开";
+			serial_con.Enabled = true;
+			serial_dis.Enabled = false;
+			socket_con.Enabled = true;
+			socket_dis.Enabled = false;
+			textEdit1.Text = "8080";
+			simpleLabelItem2.Text = "网络状态: 已断开";
+			simpleLabelItem1.Text = "串口状态：已断开";
+
 
 			serialDataManager.OnDataParsed += async (buffer, hex) =>
 			{
 				string SN = Encoding.ASCII.GetString(buffer).Trim();
-				ScanLog = new ScanLog
-				{
-					Time = DateTime.Now,
-					SN = SN,
-					ProductName = $"模拟数据{System.Guid.NewGuid().ToString()}",
-					Status = "0"
-				};
+				await ProcessNewDataAsync(SN, "串口", hex, 1, null);
+			};
 
-				bool flag = await SaveToSys(ScanLog);
+			socketManager.OnMessageReceived += async (ip, msg, socket) =>
+			{
+				await ProcessNewDataAsync(msg.Trim(), $"Socket{ip}", "null", 2, socket);
+			};
+
+			serialDataManager.OnStatusChanged += (msg) =>
+			{
 				this.Invoke(new Action(() =>
 				{
-					memoEdit1.AppendText($"[{DateTime.Now:T}] RX:{hex} \r\n");
+					memoEdit1.AppendText($"[{DateTime.Now:T}] 串口系统:{msg}");
+				}));
+			};
 
-					scanLogs.Insert(0, ScanLog);
-
-					serialDataManager.SendData(flag ? "OK" : "ERR");
+			socketManager.OnStatusChanged += (msg) =>
+			{
+				this.Invoke(new Action(() =>
+				{
+					memoEdit1.AppendText($"[{DateTime.Now:T}] 网络系统:{msg}");
 				}));
 			};
 		}
@@ -77,9 +89,9 @@ namespace SmartInventory.Client.Form
 				if (string.IsNullOrWhiteSpace(portName)) return;
 
 				serialDataManager.Open(portName);
-				simpleLabelItem1.Text = "状态：已连接";
-				simpleButton1.Enabled = false;
-				simpleButton2.Enabled = true;
+				simpleLabelItem1.Text = "串口状态：已连接";
+				serial_con.Enabled = false;
+				serial_dis.Enabled = true;
 				comboBoxEdit1.Enabled = false;
 				memoEdit1.AppendText($"[{DateTime.Now:T}] --- 串口已手动打开 --- \r\n");
 
@@ -96,10 +108,10 @@ namespace SmartInventory.Client.Form
 			try
 			{
 				serialDataManager.Close();
-				simpleButton1.Enabled = true;
-				simpleButton2.Enabled = false;
+				serial_con.Enabled = true;
+				serial_dis.Enabled = false;
 				comboBoxEdit1.Enabled = true;
-				simpleLabelItem1.Text = "状态：已断开";
+				simpleLabelItem1.Text = "串口状态：已断开";
 				memoEdit1.AppendText($"[{DateTime.Now:T}] --- 串口已手动断开 --- \r\n");
 			}
 			catch (Exception ex)
@@ -136,6 +148,73 @@ namespace SmartInventory.Client.Form
 			{
 				return false;
 			}
+		}
+
+		private void socket_con_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				string? portName = textEdit1.Text;
+				if (string.IsNullOrWhiteSpace(portName)) return;
+
+				socketManager.Start(int.Parse(portName));
+				simpleLabelItem2.Text = "网络状态：已连接";
+				socket_con.Enabled = false;
+				socket_dis.Enabled = true;
+				textEdit1.Enabled = false;
+				memoEdit1.AppendText($"[{DateTime.Now:T}] --- Socket监听已手动打开 --- \r\n");
+
+
+			}
+			catch (Exception ex)
+			{
+				XtraMessageBox.Show("连接失败" + ex.Message);
+			}
+		}
+
+		private void socket_dis_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				socketManager.Stop();
+				socket_con.Enabled = true;
+				socket_dis.Enabled = false;
+				textEdit1.Enabled = true;
+				simpleLabelItem2.Text = "网络状态：已断开";
+				memoEdit1.AppendText($"[{DateTime.Now:T}] --- 网络已手动断开 --- \r\n");
+			}
+			catch (Exception ex)
+			{
+				XtraMessageBox.Show($"关闭网络时发现异常{ex.Message}");
+			}
+		}
+
+		private async Task ProcessNewDataAsync(string SN, string source, string hex, int sourceFlag, Socket socket)
+		{
+			ScanLog = new ScanLog
+			{
+				Time = DateTime.Now,
+				SN = SN,
+				ProductName = $"模拟数据{System.Guid.NewGuid().ToString()}, 来自{source}",
+				Status = "0"
+			};
+
+			bool flag = await SaveToSys(ScanLog);
+			this.Invoke(new Action(() =>
+			{
+				memoEdit1.AppendText($"[{DateTime.Now:T}] RX:{hex}, 来自{source} \r\n");
+
+				scanLogs.Insert(0, ScanLog);
+
+				if (sourceFlag == 1)
+				{
+					serialDataManager.SendData(flag ? "OK" : "ERR");
+				}
+				else if (sourceFlag == 2)
+				{
+					socketManager.SendData(flag ? "OK" : "ERR", socket);
+				}
+			}));
 		}
 	}
 }

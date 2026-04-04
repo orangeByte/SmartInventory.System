@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
@@ -106,49 +107,208 @@ namespace SmartInventory.Client
 			private SerialPort _serialPort;
 
 			public event Action<byte[], string> OnDataParsed;
+			public event Action<string> OnStatusChanged;
 
 			public void Open(string portName, int baudRate = 9600)
 			{
-				if (_serialPort != null && _serialPort.IsOpen)
+				try
 				{
-					_serialPort.Close();
+					if (_serialPort != null && _serialPort.IsOpen)
+					{
+						_serialPort.Close();
+					}
+
+					_serialPort = new SerialPort(portName, baudRate);
+					_serialPort.DataBits = 8;
+					_serialPort.StopBits = StopBits.One;
+					_serialPort.Parity = Parity.None;
+
+					_serialPort.DataReceived += (sender, e) =>
+					{
+						int bytesToRead = _serialPort.BytesToRead;
+						byte[] buffer = new byte[bytesToRead];
+						_serialPort.Read(buffer, 0, bytesToRead);
+
+						string hex = BitConverter.ToString(buffer).Replace("-", " ");
+
+						OnDataParsed?.Invoke(buffer, hex);
+					};
+
+					_serialPort.Open();
+				}
+				catch (Exception ex)
+				{
+					this.OnStatusChanged?.Invoke(ex.Message);
 				}
 
-				_serialPort = new SerialPort(portName, baudRate);
-				_serialPort.DataBits = 8;
-				_serialPort.StopBits = StopBits.One;
-				_serialPort.Parity = Parity.None;
-
-				_serialPort.DataReceived += (sender, e) =>
-				{
-					int bytesToRead = _serialPort.BytesToRead;
-					byte[] buffer = new byte[bytesToRead];
-					_serialPort.Read(buffer, 0, bytesToRead);
-
-					string hex = BitConverter.ToString(buffer).Replace("-", " ");
-
-					OnDataParsed?.Invoke(buffer, hex);
-				};
-
-				_serialPort.Open();
 			}
 
 			public void Close()
 			{
-				if (_serialPort != null && _serialPort.IsOpen)
+				try
 				{
-					_serialPort.Close();
+					if (_serialPort != null && _serialPort.IsOpen)
+					{
+						_serialPort.Close();
+					}
+				}
+				catch (Exception ex)
+				{
+
+					this.OnStatusChanged?.Invoke(ex.Message);
 				}
 			}
 
 			public void SendData(string data)
 			{
-				if(_serialPort !=null && _serialPort.IsOpen)
+				try
 				{
-					byte[] buffer = Encoding.ASCII.GetBytes(data);
-					_serialPort.Write(buffer, 0, buffer.Length);
+					if (_serialPort != null && _serialPort.IsOpen)
+					{
+						byte[] buffer = Encoding.ASCII.GetBytes(data);
+						_serialPort.Write(buffer, 0, buffer.Length);
+					}
+				}
+				catch (Exception ex)
+				{
+					this.OnStatusChanged?.Invoke(ex.Message);
+				}
+
+			}
+		}
+
+		public class SocketManager
+		{
+			private Socket _serverSocket;
+			private List<Socket> _clientSockets = [];
+			public event Action<string, string, Socket> OnMessageReceived;
+			public event Action<string> OnStatusChanged;
+
+			public void Start(int port)
+			{
+				try
+				{
+					_serverSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+					_serverSocket.Bind(new IPEndPoint(IPAddress.Any, port));
+
+					_serverSocket.Listen(10);
+
+					OnStatusChanged?.Invoke($"服务器监听已开启, 正在监听端口{port}");
+
+					_serverSocket.BeginAccept(AcceptCallback, null);
+				}
+				catch (Exception ex)
+				{
+					OnStatusChanged?.Invoke($"监听启动失败{ex.Message}");
+				}
+
+
+			}
+
+			private void AcceptCallback(IAsyncResult ir)
+			{
+
+				if (_serverSocket == null) return;
+
+				try
+				{
+					Socket clientSocket = _serverSocket.EndAccept(ir);
+					_clientSockets.Add(clientSocket);
+
+					string clientInfo = clientSocket.RemoteEndPoint.ToString();
+
+					OnStatusChanged?.Invoke($"连接成功, 客户端来自 {clientInfo}");
+
+					byte[] buffer = new byte[1024];
+
+					clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, new object[] { clientSocket, buffer });
+
+					_serverSocket.BeginAccept(AcceptCallback, null);
+				}
+				catch (Exception ex)
+				{
+
+					OnStatusChanged?.Invoke($"接收连接失败: {ex.Message}");
 				}
 			}
+			
+
+			private void ReceiveCallback(IAsyncResult ar)
+			{
+				object[]? objects = ar.AsyncState as object[];
+				Socket clientSocket = objects[0] as Socket;
+				byte[] buffer = objects[1] as byte[];
+
+				try
+				{
+					int length = clientSocket.EndReceive(ar);
+					if (length > 0)
+					{
+						string msg = Encoding.UTF8.GetString(buffer, 0, length);
+						string clientInfo = clientSocket.RemoteEndPoint.ToString();
+						OnMessageReceived?.Invoke(clientInfo, msg, clientSocket);
+						clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, objects);
+					}
+					else
+					{
+						OnStatusChanged?.Invoke($"客户端断开连接: {clientSocket.RemoteEndPoint.ToString()}");
+						clientSocket.Close();
+					}
+				}
+				catch (Exception ex)
+				{
+					OnStatusChanged?.Invoke($"接收数据异常: {ex.Message}");
+				}
+			}
+
+			public void Stop()
+			{
+				try
+				{
+					_clientSockets.ForEach(x =>
+					{
+						if (x != null && x.Connected)
+						{
+							x.Shutdown(SocketShutdown.Both);
+							x.Close();
+						}
+					});
+
+					_clientSockets.Clear();
+
+					if(_serverSocket != null)
+					{
+						_serverSocket.Close();
+						_serverSocket = null;
+					}
+
+					this.OnStatusChanged?.Invoke($"Socket服务器已停止监听");
+				}
+				catch (Exception ex)
+				{
+
+					this.OnStatusChanged?.Invoke($"关闭Socket时出错, {ex.Message}");
+				}
+			}
+
+			public void SendData(string data, Socket socket)
+			{
+				try
+				{
+					byte[] buffer = Encoding.UTF8.GetBytes(data);
+					socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, (ar) =>
+					{
+						socket.EndSend(ar);
+					}, null);
+				}
+				catch (Exception ex)
+				{
+					OnStatusChanged?.Invoke($"发送数据失败: {ex.Message}");
+				}
+			}
+
+
 		}
 	}
 
